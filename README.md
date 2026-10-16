@@ -2,7 +2,7 @@
 
 Fine-tune a small language model for one task, using a big model as the teacher. One notebook, runs on a free Colab T4.
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Patan-Sameer66/touster/blob/main/touster.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Patan-Sameer66/touster_e2e_fine-tuning_pipeline/blob/main/touster.ipynb)
 
 ## What it does
 
