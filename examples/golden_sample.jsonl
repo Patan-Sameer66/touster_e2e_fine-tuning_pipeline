@@ -1,0 +1,30 @@
+{"id": "g-0001", "prompt": "These headphones are amazing. The noise cancelling blocks out the train completely and the battery easily lasts my whole work week.", "response": "positive", "metadata": {"source": "human", "tags": ["electronics"]}}
+{"id": "g-0002", "prompt": "The blender cracked down the side the second time I used it. Smoothie all over the counter. Returning it.", "response": "negative", "metadata": {"source": "human", "tags": ["kitchen"]}}
+{"id": "g-0003", "prompt": "Arrived on Tuesday as promised. It's a phone case. Fits the phone.", "response": "neutral", "metadata": {"source": "human", "tags": ["accessories"]}}
+{"id": "g-0004", "prompt": "Bought this tent for a weekend in the Lakes and it stayed bone dry through two nights of heavy rain. Setup took ten minutes.", "response": "positive", "metadata": {"source": "human", "tags": ["outdoor"]}}
+{"id": "g-0005", "prompt": "Smells nothing like the description. Cheap and chemical, gave me a headache within an hour.", "response": "negative", "metadata": {"source": "human", "tags": ["beauty"]}}
+{"id": "g-0006", "prompt": "The desk lamp has three brightness levels and a USB port on the base. The cable is about 1.5 metres long.", "response": "neutral", "metadata": {"source": "human", "tags": ["home"]}}
+{"id": "g-0007", "prompt": "My daughter hasn't put this puzzle down since her birthday. Pieces are thick and the picture is lovely.", "response": "positive", "metadata": {"source": "human", "tags": ["toys"]}}
+{"id": "g-0008", "prompt": "Ordered a size M and got something that would fit a ten year old. The sizing chart is useless.", "response": "negative", "metadata": {"source": "human", "tags": ["clothing"]}}
+{"id": "g-0009", "prompt": "It's a standard HDMI cable. Works the same as the one it replaced.", "response": "neutral", "metadata": {"source": "human", "tags": ["electronics"]}}
+{"id": "g-0010", "prompt": "Best coffee grinder I've owned. Consistent grind, quiet enough that it doesn't wake the house at 6am.", "response": "positive", "metadata": {"source": "human", "tags": ["kitchen"]}}
+{"id": "g-0011", "prompt": "The app keeps disconnecting from the smartwatch and support just told me to reinstall it. Three times now.", "response": "negative", "metadata": {"source": "human", "tags": ["electronics"]}}
+{"id": "g-0012", "prompt": "Some pages of the paperback were slightly bent on arrival but the book itself is what I expected.", "response": "neutral", "metadata": {"source": "human", "tags": ["books"]}}
+{"id": "g-0013", "prompt": "These running shoes fixed my knee pain. Ran a half marathon in them last month with no blisters.", "response": "positive", "metadata": {"source": "human", "tags": ["sports"]}}
+{"id": "g-0014", "prompt": "Dog food arrived with the bag torn open and half of it spilled in the box. Not feeding him that.", "response": "negative", "metadata": {"source": "human", "tags": ["pets"]}}
+{"id": "g-0015", "prompt": "The vacuum is lighter than my old one but also has a smaller bin, so it evens out.", "response": "neutral", "metadata": {"source": "human", "tags": ["home"]}}
+{"id": "g-0016", "prompt": "Gorgeous colour, soaks in fast and my skin feels soft all day. Already ordered a second bottle.", "response": "positive", "metadata": {"source": "human", "tags": ["beauty"]}}
+{"id": "g-0017", "prompt": "The drill battery died after twenty minutes and takes four hours to charge. Useless for a real job.", "response": "negative", "metadata": {"source": "human", "tags": ["tools"]}}
+{"id": "g-0018", "prompt": "Package contains 12 AA batteries as listed. Haven't used them yet.", "response": "neutral", "metadata": {"source": "human", "tags": ["electronics"]}}
+{"id": "g-0019", "prompt": "Really comfortable office chair. My back stopped aching after the first week and the armrests adjust properly.", "response": "positive", "metadata": {"source": "human", "tags": ["furniture"]}}
+{"id": "g-0020", "prompt": "The non-stick coating started peeling after a month even though I only used wooden spoons. Avoid.", "response": "negative", "metadata": {"source": "human", "tags": ["kitchen"]}}
+{"id": "g-0021", "prompt": "The jacket is a darker green than in the photos. Material and fit are as described.", "response": "neutral", "metadata": {"source": "human", "tags": ["clothing"]}}
+{"id": "g-0022", "prompt": "Brilliant board game for family nights. Easy to learn, and even my teenagers ask to play it.", "response": "positive", "metadata": {"source": "human", "tags": ["toys"]}}
+{"id": "g-0023", "prompt": "Screen protector was full of bubbles no matter how carefully I applied it, and the second one in the pack cracked.", "response": "negative", "metadata": {"source": "human", "tags": ["accessories"]}}
+{"id": "g-0024", "prompt": "I use the yoga mat twice a week. It's a normal mat, nothing special either way.", "response": "neutral", "metadata": {"source": "human", "tags": ["sports"]}}
+{"id": "g-0025", "prompt": "The cat ignored every other scratching post but loves this one. Our sofa is finally safe.", "response": "positive", "metadata": {"source": "human", "tags": ["pets"]}}
+{"id": "g-0026", "prompt": "Wobbly from day one. One of the bookshelf screws was missing and the holes didn't line up.", "response": "negative", "metadata": {"source": "human", "tags": ["furniture"]}}
+{"id": "g-0027", "prompt": "Replacement filter for my water jug. Same as the original brand, slightly cheaper.", "response": "neutral", "metadata": {"source": "human", "tags": ["kitchen"]}}
+{"id": "g-0028", "prompt": "Couldn't put this novel down. Finished it in two evenings and immediately bought the sequel.", "response": "positive", "metadata": {"source": "human", "tags": ["books"]}}
+{"id": "g-0029", "prompt": "The garden hose kinks every few metres and started leaking at the connector within a week.", "response": "negative", "metadata": {"source": "human", "tags": ["garden"]}}
+{"id": "g-0030", "prompt": "Delivery took eight days. The plant pots are terracotta, 20 cm across, with drainage holes.", "response": "neutral", "metadata": {"source": "human", "tags": ["garden"]}}

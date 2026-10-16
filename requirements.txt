@@ -1,0 +1,45 @@
+# touster pinned dependencies.
+# Training stack checked together: unsloth 2026.10.5 caps transformers<=5.17.0 and trl<=1.15.0;
+# vllm 0.31.0 pins torch==2.13.0 and transformers<5.18.
+# mergekit 0.1.4 pins pydantic~=2.10 which clashes with vllm, so it is not listed here.
+# Cell 7 installs it with --no-deps only when model_soup=true.
+
+# config
+pydantic==2.14.1
+PyYAML==6.0.3
+
+# teacher / judge access
+litellm==1.105.1
+
+# data
+datasets==4.8.5
+datasketch==2.0.0
+sentence-transformers==6.1.0
+
+# training
+torch==2.13.0
+transformers==5.17.0
+trl==1.15.0
+peft==0.21.2
+accelerate==1.15.0
+bitsandbytes==0.50.2; sys_platform != "darwin"
+unsloth==2026.10.5; sys_platform != "darwin"
+unsloth_zoo==2026.10.5; sys_platform != "darwin"
+xformers==0.0.35; sys_platform == "linux"
+vllm==0.31.0; sys_platform == "linux"
+
+# evaluation
+lm_eval==0.4.13
+rouge_score==0.1.2
+
+# export and demo
+huggingface_hub==1.33.0
+gradio==6.30.0
+
+# dashboard and report (Jupyter, IPython and ipywidgets come with Colab; locally see README)
+rich==15.0.0
+Jinja2==3.1.6
+plotly==7.1.0
+
+# tests
+pytest==9.1.1

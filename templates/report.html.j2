@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>touster report: {{ summary.task }}</title>
+<style>
+.touster-report {
+  --bg: #ffffff;
+  --fg: #1d2129;
+  --muted: #5f6673;
+  --card: #f5f6f8;
+  --border: #dde0e5;
+  --accent: #2f6fdb;
+  --good: #1f8a4c;
+  --bad: #c0392b;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+@media (prefers-color-scheme: dark) {
+  .touster-report {
+    --bg: #15171c;
+    --fg: #e4e6ea;
+    --muted: #9aa1ad;
+    --card: #1e2128;
+    --border: #2e323b;
+    --accent: #6c9cf0;
+    --good: #4cc37f;
+    --bad: #ef6b5b;
+  }
+}
+html, body { margin: 0; background: #ffffff; }
+@media (prefers-color-scheme: dark) { html, body { background: #15171c; } }
+.touster-report h1 { font-size: 1.6rem; margin: 0 0 4px; }
+.touster-report h2 { font-size: 1.2rem; margin: 0 0 12px; }
+.touster-report section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin: 16px 0;
+}
+.touster-report .muted { color: var(--muted); }
+.touster-report .not-run { color: var(--muted); font-style: italic; }
+.touster-report .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.touster-report .stat { border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; background: var(--bg); }
+.touster-report .stat .label { font-size: 0.8rem; color: var(--muted); }
+.touster-report .stat .value { font-size: 1.15rem; font-weight: 600; word-break: break-word; }
+.touster-report .good { color: var(--good); }
+.touster-report .bad { color: var(--bad); font-weight: 600; }
+.touster-report table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+.touster-report th, .touster-report td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.touster-report th { color: var(--muted); font-weight: 600; }
+.touster-report td.num, .touster-report th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.touster-report .scroll { overflow-x: auto; }
+.touster-report pre { white-space: pre-wrap; word-break: break-word; margin: 0; font-size: 0.85rem; font-family: ui-monospace, Consolas, monospace; }
+.touster-report .example { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+.touster-report .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+@media (max-width: 700px) { .touster-report .pair { grid-template-columns: 1fr; } }
+.touster-report .pair > div { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
+</style>
+<script type="text/javascript">{{ plotly_js }}</script>
+</head>
+<body>
+<div class="touster-report">
+
+<header>
+  <h1>touster report: {{ summary.task }}</h1>
+  <div class="muted">run {{ summary.run_id }} &middot; status {{ summary.status }}{% if summary.smoke %} &middot; smoke test{% endif %}</div>
+</header>
+
+<section id="summary">
+  <h2>Summary</h2>
+  <p>{{ summary.description }}</p>
+  <div class="stats">
+    <div class="stat"><div class="label">Task type</div><div class="value">{{ summary.task_type }}</div></div>
+    <div class="stat"><div class="label">Teacher</div><div class="value">{{ summary.teacher }}</div></div>
+    <div class="stat"><div class="label">Judge</div><div class="value">{{ summary.judge }}</div></div>
+    <div class="stat"><div class="label">Student</div><div class="value">{{ summary.student }}</div></div>
+    <div class="stat"><div class="label">Base {{ summary.metric }}</div>
+      <div class="value">{% if summary.base_score is not none %}{{ "%.4f"|format(summary.base_score) }}{% else %}<span class="not-run">not run</span>{% endif %}</div></div>
+    <div class="stat"><div class="label">Final {{ summary.metric }}{% if summary.final_stage %} ({{ summary.final_stage }}){% endif %}</div>
+      <div class="value">{% if summary.final_score is not none %}{{ "%.4f"|format(summary.final_score) }}{% else %}<span class="not-run">not run</span>{% endif %}</div></div>
+    <div class="stat"><div class="label">Gain vs base</div>
+      <div class="value">{% if summary.gain_points is not none %}<span class="{{ 'good' if summary.gain_points >= 0 else 'bad' }}">{{ "%+.1f"|format(summary.gain_points) }} points</span>{% else %}<span class="not-run">not run</span>{% endif %}</div></div>
+    <div class="stat"><div class="label">Total cost</div><div class="value">${{ "%.4f"|format(summary.total_usd) }}</div></div>
+    <div class="stat"><div class="label">Total time</div><div class="value">{{ "%.1f"|format(summary.minutes) }} min</div></div>
+  </div>
+  <p class="muted">Cells completed: {% if summary.completed %}{{ summary.completed|join(", ") }}{% else %}none{% endif %}</p>
+</section>
+
+<section id="funnel">
+  <h2>Data funnel</h2>
+  {% if funnel %}
+  {{ funnel.chart }}
+  <div class="scroll"><table>
+    <tr><th>step</th><th class="num">records left</th></tr>
+    {% for step, count in funnel.rows %}<tr><td>{{ step }}</td><td class="num">{{ count }}</td></tr>{% endfor %}
+  </table></div>
+  {% else %}
+  <p class="not-run">not run: no synthetic data funnel in this run.</p>
+  {% endif %}
+</section>
+
+<section id="loss">
+  <h2>Training loss</h2>
+  {% if loss %}
+  {{ loss.chart }}
+  {% else %}
+  <p class="not-run">not run: no data (no trainer_state.json found in the checkpoint folders).</p>
+  {% endif %}
+</section>
+
+<section id="scores">
+  <h2>Score per stage</h2>
+  {% if scores %}
+  {{ scores.chart }}
+  <p class="muted" id="selection-note">The best self-improvement round is picked on this same eval set, so its score is slightly optimistic. Small gains between rounds may not hold up on new data.</p>
+  <div class="scroll"><table>
+    <tr><th>stage</th><th class="num">{{ scores.metric }}</th><th class="num">judge win rate vs base</th><th class="num">n</th></tr>
+    {% for row in scores.rows %}
+    <tr><td>{{ row.stage }}</td>
+      <td class="num">{{ "%.4f"|format(row.score) }}</td>
+      <td class="num">{% if row.win is number %}{{ "%.2f"|format(row.win) }}{% else %}-{% endif %}</td>
+      <td class="num">{{ row.n if row.n is not none else "-" }}</td></tr>
+    {% endfor %}
+  </table></div>
+  {% else %}
+  <p class="not-run">not run: no evaluation results yet.</p>
+  {% endif %}
+</section>
+
+<section id="regression">
+  <h2>Regression check</h2>
+  {% if regression %}
+  <p class="muted">General-ability benchmarks. Red marks a drop of more than {{ "%.0f"|format(regression.limit) }} points against the base model.</p>
+  <div class="scroll"><table>
+    <tr><th>stage</th>{% for task in regression.tasks %}<th class="num">{{ task }}</th>{% endfor %}</tr>
+    {% for row in regression.rows %}
+    <tr><td>{{ row.stage }}</td>
+      {% for cell in row.cells %}<td class="num{% if cell.flag %} bad{% endif %}">{% if cell.value is number %}{{ "%.4f"|format(cell.value) }}{% else %}-{% endif %}</td>{% endfor %}
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}
+  <p class="not-run">not run: no regression scores in the eval results.</p>
+  {% endif %}
+</section>
+
+<section id="costs">
+  <h2>Cost by phase</h2>
+  {% if costs %}
+  {{ costs.chart }}
+  <div class="scroll"><table>
+    <tr><th>phase</th><th class="num">USD</th></tr>
+    {% for phase, usd in costs.rows %}<tr><td>{{ phase }}</td><td class="num">{{ "%.4f"|format(usd) }}</td></tr>{% endfor %}
+    <tr><th>total</th><th class="num">{{ "%.4f"|format(costs.total) }}</th></tr>
+  </table></div>
+  {% else %}
+  <p class="not-run">not run: no teacher or judge calls logged.</p>
+  {% endif %}
+</section>
+
+<section id="examples">
+  <h2>Examples: base vs final{% if final_stage %} ({{ final_stage }}){% endif %}</h2>
+  {% if examples %}
+  {% for ex in examples %}
+  <div class="example">
+    <div class="muted">Prompt</div>
+    <pre>{{ ex.prompt }}</pre>
+    {% if ex.reference %}<div class="muted">Reference</div><pre>{{ ex.reference }}</pre>{% endif %}
+    <div class="pair">
+      <div><div class="muted">Base</div><pre>{{ ex.base }}</pre></div>
+      <div><div class="muted">Final</div><pre>{{ ex.final }}</pre></div>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <p class="not-run">not run: needs eval answers for the base model and a trained stage.</p>
+  {% endif %}
+</section>
+
+<footer class="muted">touster run report. Everything is inlined, so the file opens offline.</footer>
+</div>
+</body>
+</html>

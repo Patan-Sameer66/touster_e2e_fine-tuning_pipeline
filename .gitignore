@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Notebook
+.ipynb_checkpoints/
+
+# Run outputs (weights, data, reports)
+runs/
+unsloth_compiled_cache/
+llama.cpp/
+
+# Secrets
+.env
+*.key
+
+# Colab install marker
+.touster_installed
+*.gguf
