@@ -3,6 +3,7 @@
 Fine-tune a small language model for one task, using a big model as the teacher. One notebook, runs on a free Colab T4.
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Patan-Sameer66/touster_e2e_fine-tuning_pipeline/blob/main/touster.ipynb)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## What it does
 
@@ -16,11 +17,17 @@ You write 20-50 examples of your task. touster then:
 6. exports it to GGUF with an Ollama `Modelfile`, and writes an HTML report.
 
 ```mermaid
-flowchart LR
-    A[your examples] --> B[teacher generates data] --> C[filters] --> D[QLoRA training]
-    D --> E[evaluation] --> F{improve more?}
-    F -->|yes| G[DPO round] --> E
-    F -->|no| H[GGUF + Ollama + report]
+flowchart TD
+    A["Your examples (20-50)"] --> S{"Split"}
+    S -->|"seed set"| B["Teacher writes new examples"]
+    S -->|"eval set, never trained on"| E
+    B --> C["Filters: duplicates, near-copies,<br/>eval overlap, low quality"]
+    C --> D["QLoRA fine-tuning"]
+    D --> E["Evaluation vs base model"]
+    E --> F{"Improve more?"}
+    F -->|"yes"| G["DPO round"]
+    G --> E
+    F -->|"no"| H["Export: GGUF, Ollama Modelfile,<br/>model card, HTML report"]
 ```
 
 <!-- Dashboard GIF goes here: record the live dashboard during a run, save it as docs/dashboard.gif and add ![dashboard](docs/dashboard.gif) -->
@@ -77,8 +84,6 @@ message naming the field.
   `pip install -r requirements.txt jupyterlab==4.6.4 ipywidgets==8.1.9`, then open `touster.ipynb`.
 - **Code tasks** run model-written code in a separate process without your API keys, but it is not a full
   sandbox. Use a throwaway Colab session for them.
-- **Teacher terms:** many providers limit training other models on their outputs. Check yours before you
-  publish a model trained this way.
 - **Limits:** one task and one GPU per run, LoRA only. The LLM judge can be wrong; read the example answers in
   the report, not just the scores.
 
@@ -100,6 +105,18 @@ Default settings on the sentiment demo (to be filled in after a full run):
 | `SSL: CERTIFICATE_VERIFY_FAILED` | A proxy or antivirus is intercepting HTTPS; fix its certificate for Python |
 | `already done, skipped` | Set `FORCE = True` in that cell |
 
-## Contributing and licence
+## Contributing
 
-Tests: `pytest -q tests` (CPU only, no network). See [CONTRIBUTING.md](CONTRIBUTING.md). MIT licence, see [LICENSE](LICENSE).
+Run the tests with `pytest -q tests` (CPU only, no network). See [CONTRIBUTING.md](CONTRIBUTING.md) for the smoke test.
+
+## Licence
+
+The touster code is released under the [MIT licence](LICENSE).
+
+The models and data you make with it are covered by other terms:
+
+- **Student model:** a fine-tuned model keeps the licence of the base model you start from. The default,
+  Qwen2.5-1.5B-Instruct, is Apache-2.0. Check the model card of any other student you pick.
+- **Teacher outputs:** many API providers do not allow their outputs to be used to train competing models.
+  Read your teacher provider's terms before you train on generated data or share the resulting model.
+- **Your examples:** only use data you have the right to use for training.
